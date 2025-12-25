@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <button id="btn">Click Me</button>
+    <script>
+        document.getElementById('btn').addEventListener('click', function(){
+            alert('button clicked!');
+        })
+    </script>
+     -->
+    <!-- <button id="btn">Double Click Me</button>
+
+    <script>
+    document.getElementById("btn").addEventListener("dblclick", ()=>{
+        alert("You double-clicked!");
+    });
+    </script> -->
+
+    <div id="box" style="width:150px;height:150px;background:red;"></div>
+    <script>
+        document.getElementById("box").addEventListener("mouseover", ()=>{
+    console.log("Mouse entered!");
+});
+    </script>
+
+</body>
+</html>
+
+    <!-- <div class="card">
+
+        <h1>Unit Converter</h1>
+
+        <div class="controls">
+            <select id="category">
+                <option value="">— Select Category —</option>
+                <option value="length">Length</option>
+                <option value="temperature">Temperature</option>
+                <option value="speed">Speed</option>
+                <option value="maqss">Mass</option>
+                <option value="time">Time</option>
+                <option value="pressure">Pressure</option>
+                <option value="area">Area</option>
+                <option value="volume">Volume</option>
+                <option value="angle">Angle</option>
+                <option value="data">Digital Data</option>
+                <option value="currency">Currency</option>
+            </select>
+        </div>
+
+        <div class="row">
+            <div class="side">
+                <input id="inputValue" type="number" placeholder="Enter value">
+                <select id="fromUnit"></select>
+            </div>
+
+            <div class="equal">=</div>
+
+            <div class="side">
+                <input id="resultValue" readonly>
+                <select id="toUnit"></select>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+
+        document.getElementById("category").addEventListener("change", loadUnits);
+        document.getElementById("inputValue").addEventListener("input", convert);
+        document.getElementById("fromUnit").addEventListener("change", convert);
+        document.getElementById("toUnit").addEventListener("change", convert);
+        function loadUnits() {
+
+            let cat = document.getElementById("category").value;
+            let from = document.getElementById("fromUnit");
+            let to = document.getElementById("toUnit");
+
+            let opt = "";
+
+            // LENGTH
+            if (cat === "length") {
+                opt += "<option value='m'>Meter</option>";
+                opt += "<option value='km'>Kilometer</option>";
+                opt += "<option value='cm'>Centimeter</option>";
+                opt += "<option value='mm'>Millimeter</option>";
+                opt += "<option value='in'>Inch</option>";
+                opt += "<option value='ft'>Foot</option>";
+            }
+
+            // TEMPERATURE
+            else if (cat === "temperature") {
+                opt += "<option value='c'>Celsius</option>";
+                opt += "<option value='f'>Fahrenheit</option>";
+                opt += "<option value='k'>Kelvin</option>";
+            }
+
+            // SPEED
+            else if (cat === "speed") {
+                opt += "<option value='ms'>m/s</option>";
+                opt += "<option value='kmh'>km/h</option>";
+                opt += "<option value='mph'>mph</option>";
+            }
+
+            // MASS
+            else if (cat === "mass") {
+                opt += "<option value='kg'>Kilogram</option>";
+                opt += "<option value='g'>Gram</option>";
+                opt += "<option value='mg'>Milligram</option>";
+                opt += "<option value='lb'>Pound</option>";
+            }
+
+            // TIME
+            else if (cat === "time") {
+                opt += "<option value='ms'>Millisecond</option>";
+                opt += "<option value='sec'>Second</option>";
+                opt += "<option value='min'>Minute</option>";
+                opt += "<option value='hr'>Hour</option>";
+                opt += "<option value='day'>Day</option>";
+                opt += "<option value='week'>Week</option>";
+                opt += "<option value='month'>Month</option>";
+                opt += "<option value='year'>Year</option>";
+            }
+
+            // PRESSURE
+            else if (cat === "pressure") {
+                opt += "<option value='pa'>Pascal</option>";
+                opt += "<option value='bar'>Bar</option>";
+                opt += "<option value='psi'>PSI</option>";
+            }
+
+            // AREA
+            else if (cat === "area") {
+                opt += "<option value='m2'>Square Meter</option>";
+                opt += "<option value='cm2'>Square Centimeter</option>";
+                opt += "<option value='ft2'>Square Foot</option>";
+                opt += "<option value='in2'>Square Inch</option>";
+                opt += "<option value='ha'>Hectare</option>";
+                opt += "<option value='acre'>Acre</option>";
+            }
+
+            // VOLUME
+            else if (cat === "volume") {
+                opt += "<option value='l'>Liter</option>";
+                opt += "<option value='ml'>Milliliter</option>";
+                opt += "<option value='m3'>Cubic Meter</option>";
+            }
+
+            // ANGLE
+            else if (cat === "angle") {
+                opt += "<option value='deg'>Degree</option>";
+                opt += "<option value='rad'>Radian</option>";
+            }
+
+            // DATA
+            else if (cat === "data") {
+                opt += "<option value='byte'>Byte</option>";
+                opt += "<option value='kb'>KB</option>";
+                opt += "<option value='mb'>MB</option>";
+                opt += "<option value='gb'>GB</option>";
+            }
+
+            // CURRENCY
+            else if (cat === "currency") {
+                opt += "<option value='INR'>INR</option>";
+                opt += "<option value='USD'>USD</option>";
+                opt += "<option value='EUR'>EUR</option>";
+            }
+
+            from.innerHTML = opt;
+            to.innerHTML = opt;
+
+            convert();
+        }
+        function convert() {
+
+            if (document.getElementById("inputValue").value.trim() === "") {
+            document.getElementById("resultValue").value = "";
+            return;
+        }
+
+
+            let cat = document.getElementById("category").value;
+            let val = Number(document.getElementById("inputValue").value);
+            let from = document.getElementById("fromUnit").value;
+            let to = document.getElementById("toUnit").value;
+
+            if (isNaN(val)) return;
+
+            let result = 0;
+
+            // LENGTH
+            if (cat === "length") {
+
+                let m = 0;
+                if (from === "m") m = val;
+                else if (from === "km") m = val * 1000;
+                else if (from === "cm") m = val / 100;
+                else if (from === "mm") m = val / 1000;
+                else if (from === "in") m = val * 0.0254;
+                else if (from === "ft") m = val * 0.3048;
+
+                if (to === "m") result = m;
+                else if (to === "km") result = m / 1000;
+                else if (to === "cm") result = m * 100;
+                else if (to === "mm") result = m * 1000;
+                else if (to === "in") result = m / 0.0254;
+                else if (to === "ft") result = m / 0.3048;
+            }
+
+            // TEMPERATURE
+            else if (cat === "temperature") {
+
+                if (from === "c" && to === "f") result = (val * 9 / 5) + 32;
+                else if (from === "f" && to === "c") result = (val - 32) * 5 / 9;
+                else if (from === "c" && to === "k") result = val + 273.15;
+                else if (from === "k" && to === "c") result = val - 273.15;
+                else if (from === "f" && to === "k") result = (val - 32) * 5 / 9 + 273.15;
+                else if (from === "k" && to === "f") result = (val - 273.15) * 9 / 5 + 32;
+                else result = val;
+            }
+
+            // SPEED
+            else if (cat === "speed") {
+                let ms = 0;
+
+                if (from === "ms") ms = val;
+                else if (from === "kmh") ms = val / 3.6;
+                else if (from === "mph") ms = val * 0.44704;
+
+                if (to === "ms") result = ms;
+                else if (to === "kmh") result = ms * 3.6;
+                else if (to === "mph") result = ms / 0.44704;
+            }
+
+            // MASS
+            else if (cat === "mass") {
+                let g = 0;
+
+                if (from === "kg") g = val * 1000;
+                else if (from === "g") g = val;
+                else if (from === "mg") g = val / 1000;
+                else if (from === "lb") g = val * 453.592;
+
+                if (to === "kg") result = g / 1000;
+                else if (to === "g") result = g;
+                else if (to === "mg") result = g * 1000;
+                else if (to === "lb") result = g / 453.592;
+            }
+
+            // TIME
+            else if (cat === "time") {
+
+                let s = 0;
+
+                if (from === "ms") s = val / 1000;
+                else if (from === "sec") s = val;
+                else if (from === "min") s = val * 60;
+                else if (from === "hr") s = val * 3600;
+                else if (from === "day") s = val * 86400;
+                else if (from === "week") s = val * 604800;
+                else if (from === "month") s = val * 2628000;
+                else if (from === "year") s = val * 31536000;
+
+                if (to === "ms") result = s * 1000;
+                else if (to === "sec") result = s;
+                else if (to === "min") result = s / 60;
+                else if (to === "hr") result = s / 3600;
+                else if (to === "day") result = s / 86400;
+                else if (to === "week") result = s / 604800;
+                else if (to === "month") result = s / 2628000;
+                else if (to === "year") result = s / 31536000;
+            }
+
+            // PRESSURE
+            else if (cat === "pressure") {
+
+                let pa = 0;
+
+                if (from === "pa") pa = val;
+                else if (from === "bar") pa = val * 100000;
+                else if (from === "psi") pa = val * 6894.76;
+
+                if (to === "pa") result = pa;
+                else if (to === "bar") result = pa / 100000;
+                else if (to === "psi") result = pa / 6894.76;
+            }
+
+            // AREA
+            else if (cat === "area") {
+
+                let m2 = 0;
+
+                if (from === "m2") m2 = val;
+                else if (from === "cm2") m2 = val / 10000;
+                else if (from === "ft2") m2 = val * 0.092903;
+                else if (from === "in2") m2 = val * 0.00064516;
+                else if (from === "ha") m2 = val * 10000;
+                else if (from === "acre") m2 = val * 4046.86;
+
+                if (to === "m2") result = m2;
+                else if (to === "cm2") result = m2 * 10000;
+                else if (to === "ft2") result = m2 / 0.092903;
+                else if (to === "in2") result = m2 / 0.00064516;
+                else if (to === "ha") result = m2 / 10000;
+                else if (to === "acre") result = m2 / 4046.86;
+            }
+
+            // VOLUME
+            else if (cat === "volume") {
+
+                let L = 0;
+
+                if (from === "l") L = val;
+                else if (from === "ml") L = val / 1000;
+                else if (from === "m3") L = val * 1000;
+
+                if (to === "l") result = L;
+                else if (to === "ml") result = L * 1000;
+                else if (to === "m3") result = L / 1000;
+            }
+
+            // ANGLE
+            else if (cat === "angle") {
+
+                if (from === "deg" && to === "rad") result = val * (Math.PI / 180);
+                else if (from === "rad" && to === "deg") result = val * (180 / Math.PI);
+                else result = val;
+            }
+
+            // DATA
+            else if (cat === "data") {
+
+                let bytes = 0;
+
+                if (from === "byte") bytes = val;
+                else if (from === "kb") bytes = val * 1024;
+                else if (from === "mb") bytes = val * 1024 * 1024;
+                else if (from === "gb") bytes = val * 1024 * 1024 * 1024;
+
+                if (to === "byte") result = bytes;
+                else if (to === "kb") result = bytes / 1024;
+                else if (to === "mb") result = bytes / (1024 * 1024);
+                else if (to === "gb") result = bytes / (1024 * 1024 * 1024);
+            }
+
+            // CURRENCY
+            else if (cat === "currency") {
+
+                let INR = 0;
+
+                if (from === " INR") INR = val;
+                else if (from === "USD") INR = val * 83;
+                else if (from === "EUR") INR = val * 90;
+
+                if (to === "INR") result = INR;
+                else if (to === "USD") result = INR / 83;
+                else if (to === "EUR") result = INR / 90;
+            }
+
+            document.getElementById("resultValue").value = result;
+        }
+    </script> -->
