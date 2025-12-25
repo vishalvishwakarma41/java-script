@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <form onsubmit="return validation()">
+
+        <h2>Registration Form</h2>
+
+        <div class="row">
+            <div>
+                <label>Name <span>*</span></label>
+                <input type="text" id="Uname" oninput="nameCheck(this)">
+                <span id="uname_error"></span>
+            </div>
+
+            <div>
+                <label>Last Name <span>*</span></label>
+                <input type="text" id="Lname" oninput="nameCheck1(this)">
+                <span id="lname_error"></span>
+            </div>
+        </div>
+
+        <label>Father Name <span>*</span></label>
+        <input type="text" id="Fname" oninput="nameCheck2(this)">
+        <span id="fname_error"></span>
+
+        <label>Email <span>*</span></label>
+        <input type="text" id="Email" placeholder="example@gmail.com" oninput="emailCheck(this)" >
+        <span id="email_error"></span>
+
+        <!-- <label>Password <span>*</span></label>
+        <input type="password" id="Pass" placeholder="Example: Abcd@123" oninput="passcheck(this)" >
+        <span id="pass_error"></span> -->
+        <label>Password <span>*</span></label>
+        <input type="password" id="Pass" placeholder="Example: Abcd@123"
+            oninput="passcheck(this.value)">
+
+        <span id="pass_error"></span>
+
+
+        <label>Mobile <span>*</span></label>
+        <input type="text" id="Num" oninput="check_num(this)">
+        <span id="num_error"></span>
+
+        <label>Date <span>*</span></label>
+        <input type="date" id="Date" oninput="dateCheck(this)" >
+        <span id="date_error"></span>
+
+        <label>Time <span>*</span></label>
+        <input type="time" id="Time" onchange="timeCheck()">
+        <span id="time_error"></span>
+
+        <label>Upload File <span>*</span></label>
+        <input type="file" id="File" onchange="fileCheck()">
+        <span id="file_error"></span>
+
+        <label>Temporary Address <span>*</span></label>
+        <textarea id="TempAdd" oninput="tempCheck()"></textarea>
+        <span id="temp_error"></span>
+
+        <!-- <label>
+            <input type="checkbox" id="sameAdd" onclick="copyAddress()">
+            Permanent same as temporary
+        </label> -->
+        <label>Permanent same as temporary <span>*</span></label>
+
+        <div class="inline">
+            <input type="radio" name="perAddOption" onclick="perYes()"> Yes
+            <input type="radio" name="perAddOption" onclick="perNo()"> No
+        </div>
+        <span id="per_option_error"></span>
+
+
+        <label>Permanent Address <span>*</span></label>
+        <textarea id="PerAdd" oninput="perCheck()"></textarea>
+        <span id="per_error"></span>
+
+         label>Gender <span>*</span></label>
+        <div class="inline">
+            <input type="radio" name="gender"> Male
+            <input type="radio" name="gender"> Female
+        </div>
+        <span id="gender_error"></span> 
+      
+
+        <label>Hobby<span>*</span></label>
+        <div class="inline">
+            <input type="checkbox" name="hobby"> Cricket
+            <input type="checkbox" name="hobby"> Football
+            <input type="checkbox" name="hobby"> Singing
+            <input type="checkbox" name="hobby"> Reading
+            <input type="checkbox" name="hobby"> Writing
+
+        </div>
+        
+        <span id="hobby_error"></span>
+
+        <label>Captcha <span>*</span></label>
+        <div class="captcha">
+            <span id="captchaBox"></span>
+            <button type="button" onclick="generateCaptcha()">↻</button>
+        </div>
+        <input type="text" id="captchaInput">
+        <span id="captcha_error"></span>
+
+        <input type="submit" value="SUBMIT">
+
+    </form>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
