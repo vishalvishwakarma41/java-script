@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Time - jQuery</title>
+
+    <!-- jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f2f6ff;
+            font-family: Arial, sans-serif;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            width: 360px;
+        }
+
+        h1 {
+            margin: 0;
+            color: #333;
+            font-size: 26px;
+        }
+
+        h2 {
+            margin: 10px 0;
+            color: #555;
+        }
+
+        #curr_time {
+            color: #0d6efd;
+            font-weight: bold;
+        }
+
+        #hour {
+            font-size: 18px;
+            color: #666;
+        }
+
+        #greet {
+            margin: 15px 0;
+            font-size: 24px;
+            color: #222;
+        }
+
+        img {
+            margin-top: 15px;
+            width: 200px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="card">
+    <h1>Live Time : <span id="curr_time"></span></h1>
+    <h2>Hour : <span id="hour"></span></h2>
+    <h2 id="greet"></h2>
+    <img id="greetImg" alt="Greeting Image">
+</div>
+
+<script>
+$(document).ready(function(){
+
+    function updateTime(){
+
+        let date = new Date();
+
+        // Time show
+        $("#curr_time").text(
+            date.toLocaleTimeString("en-US")
+        );
+
+        // Hour
+        let hour = date.getHours();
+        $("#hour").text(hour);
+
+        let msg = "";
+        let imgPath = "";
+
+        if(hour >= 4 && hour <= 11){
+            msg = "Good Morning";
+            imgPath = "C:/Users/hp/OneDrive/Desktop/jsvs/images/gm.gif";
+        }
+        else if(hour >= 12 && hour <= 15){
+            msg = "Good Afternoon";
+            imgPath = "C:/Users/hp/OneDrive/Desktop/jsvs/images/ga.gif";
+        }
+        else if(hour >= 16 && hour <= 19){
+            msg = "Good Evening";
+            imgPath = "C:/Users/hp/OneDrive/Desktop/jsvs/images/ge.gif";
+        }
+        else{
+            msg = "Good Night";
+            imgPath = "C:/Users/hp/OneDrive/Desktop/jsvs/images/gn.gif";
+        }
+
+        $("#greet").text(msg);
+        $("#greetImg").attr("src", imgPath);
+    }
+
+    // First call
+    updateTime();
+
+    // Update every second
+    setInterval(updateTime, 1000);
+
+});
+</script>
+
+</body>
+</html>
