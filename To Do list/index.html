@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>To Do List</title>
+  <link rel="stylesheet" href="/To Do list/css/style.css">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body>
+
+<form id="taskForm" class="form-box" onsubmit="return false;">
+    <h2>To Do List</h2>
+    <div class="form-row">
+      <label for="assigned">Assigned To</label>
+      <input type="text" id="assigned" oninput="validateText(this)" onblur="clearError(this)">
+    </div>
+    <span class="err" id="assignedErr"></span>
+
+    <div class="form-row">
+      <label for="task">Task</label>
+      <input type="text" id="task" oninput="validateText(this)" onblur="clearError(this)">
+    </div>
+    <span class="err" id="taskErr"></span>
+
+
+    <div class="form-row">
+      <label for="desc">Description</label>
+      <textarea id="desc" rows="2" oninput="validateText(this)"></textarea>
+    </div>
+    <span class="err" id="descErr"></span>
+
+    <div class="form-row">
+      <label>Date of Assignment</label>
+      <input type="date" id="date" onchange="checkForm()">
+    </div>
+
+    <div class="form-row">
+      <label>Priority</label>
+      <select id="priority" onchange="checkForm()">
+        <option value="">Select Priority</option>
+        <option>High</option>
+        <option>Medium</option>
+        <option>Low</option>
+      </select>
+    </div>
+
+
+    <div class="form-row">
+      <label>Deadline</label>
+      <div class="options">
+        <label class="opt"><input type="radio" name="deadline" value="1 Week" onchange="checkForm()">1 Week</label>
+        <label class="opt"><input type="radio" name="deadline" value="2 Weeks" onchange="checkForm()">2 Weeks</label>
+        <label class="opt"><input type="radio" name="deadline" value="3 Weeks" onchange="checkForm()">3 Weeks</label>
+        <label class="opt"><input type="radio" name="deadline" value="4 Weeks" onchange="checkForm()">4 Weeks</label>
+      </div>
+    </div>
+
+    <label>Status</label>
+
+    <div class="form-row">
+      <label>Status</label>
+      <div class="options">
+        <label class="opt"><input type="checkbox" class="status" value="Not Started" onchange="checkForm()">Not Started</label>
+        <label class="opt"><input type="checkbox" class="status" value="In Progress" onchange="checkForm()">In Progress</label>
+        <label class="opt"><input type="checkbox" class="status" value="Completed" onchange="checkForm()">Completed</label>
+        <label class="opt"><input type="checkbox" class="status" value="Needs Info" onchange="checkForm()">Needs Info</label>
+        <label class="opt"><input type="checkbox" class="status" value="On Hold" onchange="checkForm()">On Hold</label>
+        <label class="opt"><input type="checkbox" class="status" value="Cancelled" onchange="checkForm()">Cancelled</label>
+      </div>
+    </div>
+
+<button id="btn" type="button" onclick="addTask()" disabled>Add Task</button>
+
+  </div>
+
+  <div class="task-Cont">
+
+    <h2 id="taskTitle" class="task-title" style="display:none">Task List</h2>
+
+    <table id="taskTable" style="display:none">
+      <thead>
+        <tr>
+          <th>Assigned</th>
+          <th>Task</th>
+          <th>Description</th>
+          <th>Date</th>
+          <th>Priority</th>
+          <th>Deadline</th>
+          <th>Status</th>
+          <th>Edit</th>
+          <th>Delete</th>
+          <th>Complete</th>
+        </tr>
+      </thead>
+      <tbody id="taskBody"></tbody>
+    </table>
+  </form>
+  <script src="/To Do list/js/script.js"></script>
+</body>
+
+</html> 
+
+
+
+
+
+
+
+
+ 

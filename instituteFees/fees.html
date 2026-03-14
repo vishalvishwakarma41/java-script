@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Institute Fees Receipt</title>
+    <link rel="stylesheet" href="css/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+ 
+</head>
+
+<body>
+
+    <div class="container" id="receipt">
+
+        <h1>XYZ INSTITUTE</h1>
+        <h3>Vijay Nagar Indore (M.P)</h3>
+        <hr>
+        
+        <label>Student Name:</label>
+        <input type="text" id="name" oninput="validateName(this); validateStep1();">
+        <span id="nameError" style="color:red; font-size:13px;"></span><br>
+
+        <label>Date:</label>
+        <input type="date" id="date" onchange="validateStep1()">
+        <span id="dateError" style="color:red; font-size:13px;"></span><br>
+
+        <table>
+            <tr>
+                <th>Details</th>
+                <th>Amount</th>
+            </tr>
+
+            <tr>
+                <td>Course</td>
+                <td>
+                    <select id="course" onchange="courseSelected()">
+                        <option value="">Select Course</option>
+                        <option value="JAVA">JAVA</option>
+                        <option value="PYTHON">PYTHON</option>
+                        <option value="HTML">C,C++</option>
+                    </select>
+                    <span id="coursePrint" class="print-only"> </span>
+
+                    <span id="courseError" style="color:red; font-size:13px;"></span>
+
+                </td>
+            </tr>
+
+            <tr>
+                <td>Pay Fees</td>
+                <td>
+                    <!-- <input type="number" id="fees" disabled oninput="feesEntered()"> -->
+                    <input type="text" id="fees"  inputmode="numeric"
+       oninput="allowOnlyNumbers(this); feesEntered()">
+                    <span id="feesErr" class="err"></span>
+
+                </td>
+            </tr>
+      <tr>
+    <td>
+        <div class="gst-left">
+            <span>GST Include</span>
+            <select id="gst" disabled onchange="calculateGST()">
+                <option value="">Select</option>
+                <option value="5">5 %</option>
+                <option value="10">10 %</option>
+                <option value="15">15 %</option>
+                <option value="18">18 %</option>
+            </select>
+        </div>
+    </td>
+
+         <td>
+            <input type="text"
+                id="gstAmount"
+                placeholder="GST Amount"
+                readonly>
+        </td>
+    </tr>
+
+            <tr>
+                <td>CGST</td>
+                <td><input type="text" id="cgst" readonly></td>
+            </tr>
+
+            <tr>
+                <td>SGST</td>
+                <td><input type="text" id="sgst" readonly></td>
+            </tr>
+
+            <tr>
+                <td>Total Fee Including Tax</td>
+                <td><input type="text" id="total" readonly></td>
+            </tr>
+        </table>
+
+        <br>
+
+        <button onclick="applyDiscount()" id="discountBtn" disabled style="display: none;">DISCOUNT</button>
+
+        <div id="discountBox">
+
+        </div>
+
+        <br>
+        <button onclick="window.print()" id="printBtn" disabled>PRINT RECEIPT</button>
+
+    </div>
+
+
+    <script src="../instituteFees/js/fees.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+

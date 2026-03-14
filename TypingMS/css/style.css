@@ -1,0 +1,298 @@
+/* ================= RESET ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Courier New", monospace;
+
+}
+
+/* ================= BODY ================= */
+body {
+   background: #769abe;
+    color: #1f2937;
+    min-height: 100vh;
+}
+
+/* ================= MAIN CONTAINER ================= */
+#MAIN_BOX {
+    width: 850px;
+    margin: 30px auto;
+    background: #9ebdd1;
+    color: #1f2937;
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+#LAVEL_DIV{
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    flex-direction: column;
+    gap: 10px;
+}
+/* ================= HEADINGS ================= */
+#MAIN_BOX h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#LAVEL_DIV label {
+    /* margin-bottom: 8px;
+    margin-right: 10px; */
+
+    font-size: 20px;
+    font-weight: 600;
+} 
+
+/* ================= SELECT ================= */
+select {
+    width: 220px;
+    padding: 6px;
+    margin-bottom: 15px;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+}
+
+/* ================= CUSTOM INPUT ================= */
+#CUSTOM_INPUT {
+    display: none;
+    margin-bottom: 15px;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+
+#CUSTOM_INPUT input {
+    width: 120px;
+    padding: 6px;
+    border: 1px solid #d1d5db;
+}
+
+#CUSTOM_INPUT button {
+    padding: 6px 12px;
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+/* 
+#SHOW_BOX {
+    height: 140px;
+    background: #f8fafc;
+    color: #4b5563;
+    border: 1px solid #e5e7eb;
+    font-family: monospace;
+    white-space: pre-wrap;
+    padding: 12px;
+    font-size: 16px;
+    line-height: 24px;      
+    overflow-y: auto;
+} */
+
+#SHOW_BOX {
+    height: 140px;
+    background: #f8fafc;
+    color: #4b5563;
+    border: 1px solid #e5e7eb;
+/* 
+    font-family: monospace; */
+    font-family: "Courier New", monospace;
+
+    font-size: 18px;
+    line-height: 28px;
+
+    padding: 12px;
+    box-sizing: border-box;
+
+    white-space: pre-wrap;
+    word-break: break-word;
+
+    overflow-y: auto;
+}
+
+
+/* ================= CHECKBOX ================= */
+.cheak_div {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+
+
+
+.type-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 160px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+}
+
+/* SAME STYLE FOR BOTH */
+#colorText,
+#typing_box {
+    position: absolute;
+    inset: 0;
+    padding: 15px;
+
+    /* font-family: "Courier New", monospace; */
+    font-family: "Courier New", monospace;
+
+    font-size: 18px;           /* slightly bigger */
+    line-height: 28px;
+    letter-spacing: 0px;
+
+    white-space: pre-wrap;
+    word-break: break-word;
+
+    box-sizing: border-box;
+}
+
+/* Original colored text */
+#colorText {
+    pointer-events: none;
+    overflow-y: auto;
+}
+
+/* Invisible textarea */
+#typing_box {
+    background: transparent;
+    color: transparent;
+    caret-color: black;
+    border: none;
+    outline: none;
+    resize: none;
+    overflow-y: auto;
+
+    -webkit-text-fill-color: transparent; /* extra fix */
+}
+
+/* ================= CORRECT / INCORRECT ================= */
+.correct {
+    color: #22c55e;   /* soft green */
+}
+
+.incorrect {
+    color: #ef4444;   /* soft red */
+}
+
+/* ================= TIMER ================= */
+#TYMING_BOX {
+    margin-top: 15px;
+    text-align: center;
+    padding: 20px;
+}
+
+#COUNT_TIME {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #64788b;
+    font-weight: 600;
+}
+
+/* ================= BUTTONS ================= */
+#TYMING_BOX button {
+    padding: 8px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+#PAUSE_TIMER {
+    background: #f59e0b;
+}
+
+#RESET_TIMER {
+    background: #ef4444;
+}
+
+#SUMMID_BTN {
+    background: #22c55e;
+    margin-top: 10px;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* ================= RESULT BOX ================= */
+#FOOTER_DIV {
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 6px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    display: none;
+}
+
+/* RESULT GRID */
+#FOOTER_DIV .HEAD_BOX,
+#FOOTER_DIV .MID_BOX,
+#FOOTER_DIV .FOOTER_BOX {
+    display: grid;
+    grid-template-columns: 1fr 140px 1fr 140px 1fr 140px;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: center;
+}
+
+#FOOTER_DIV .FOOTER_BOX {
+    grid-template-columns: 1fr 160px 1fr 160px;
+}
+
+#FOOTER_DIV label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+#FOOTER_DIV input {
+    height: 32px;
+    padding: 4px 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    background: #ffffff;
+    text-align: center;
+    font-weight: bold;
+    color: #16a34a;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+    #MAIN_BOX {
+        width: 95%;
+    }
+
+    #FOOTER_DIV .HEAD_BOX,
+    #FOOTER_DIV .MID_BOX,
+    #FOOTER_DIV .FOOTER_BOX {
+        grid-template-columns: 1fr 120px;
+    }
+}
+
+/* ================= CONFETTI ================= */
+.confetti {
+    position: fixed;
+    top: -10px;
+    width: 8px;
+    height: 8px;
+    opacity: 0.9;
+    animation: fall linear forwards;
+    z-index: 9999;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+    }
+}

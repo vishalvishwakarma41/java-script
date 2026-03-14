@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Online Test Project</title>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+body{
+    font-family: Arial;
+    background: linear-gradient(to right,#00c6ff,#0072ff);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    background:white;
+    padding:25px;
+    width:520px;
+    border-radius:10px;
+    box-shadow:0 0 10px gray;
+}
+
+.hidden{ display:none; }
+
+h2{
+    text-align:center;
+    color:#ff4b2b;
+}
+
+.input-group{
+    margin-bottom:15px;
+}
+
+input{
+    width:100%;
+    padding:8px;
+    border:2px solid #ccc;
+    border-radius:5px;
+}
+
+.success{ border-color:green; }
+.fail{ border-color:red; }
+
+.error{
+    color:red;
+    font-size:13px;
+    display:none;
+    margin-top:5px;
+}
+
+.strength{
+    font-weight:bold;
+    margin-top:5px;
+}
+
+/* Registration Image Square */
+.square{
+    width:150px;
+    height:150px;
+    border:3px solid red;
+    margin:auto;
+    overflow:hidden;
+}
+
+.square img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* Rules Image Circle */
+.circle{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    border:3px solid red;
+    overflow:hidden;
+    margin:auto;
+}
+
+.circle img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    background:#ff4b2b;
+    color:white;
+    border:none;
+    margin-top:10px;
+    cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- REGISTRATION -->
+<div id="registerSection">
+
+<h2>Student Registration</h2>
+
+<div class="square">
+    <img id="preview">
+</div>
+
+<div class="input-group">
+<input type="text" id="name" placeholder="Enter Name">
+<div id="nameError" class="error">Enter Valid Name</div>
+</div>
+
+<div class="input-group">
+<input type="text" id="email" placeholder="Enter Email">
+<div id="emailError" class="error">Enter Valid Email</div>
+</div>
+
+<div class="input-group">
+<input type="password" id="password" placeholder="Enter Password">
+<div id="strength" class="strength"></div>
+<div id="passError" class="error">Weak Password</div>
+</div>
+
+<div class="input-group">
+<input type="date" id="date">
+<div id="dateError" class="error">Select Date of Birth</div>
+</div>
+
+<div class="input-group">
+<label><input type="radio" name="gender" value="Male"> Male</label>
+<label><input type="radio" name="gender" value="Female"> Female</label>
+<div id="genderError" class="error">Select Gender</div>
+</div>
+
+<div class="input-group">
+<input type="file" id="image" accept="image/*">
+<div id="imageError" class="error">Select Image</div>
+</div>
+
+<button onclick="register()">Submit</button>
+
+</div>
+
+<!-- RULES -->
+<div id="rulesSection" class="hidden">
+
+<h2>Rules & Regulation</h2>
+
+<div class="circle">
+    <img id="ruleImage">
+</div>
+
+<h3 id="welcome"></h3>
+
+<ol style="font-size:14px;">
+<li> Ensure You Have A Stable Internet Connection Before Starting The Exam.</li>
+<li> Use A Desktop Or Laptop- Mobile Phones And Tablets Are Not Allowed.</li>
+<li> Open The Exam Only In Google Chrome Or Mozilla Firefox (Latest Version).</li>
+<li> Keep Your Webcam And Microphone ON If Monitoring Is Required.</li>
+<li> Do Not Refresh Or Close The Exam Window Once It Has Started.</li>
+<li> The Exam Is Time-Bound, So Complete All Sections Within The Given Duration.</li>
+<li> Do Not Switch Tabs Or Open New Windows During The Exam.</li>
+<li>8. Copying, Screen Sharing, Or Using Al/Code Generation Tools Is Strictly Prohibited.</li>
+<li> Do Not Discuss Or Share Answers With Others During The Exam.</li>
+<li> Avoid Multiple Logins Or Using More Than One Device At A Time.</li>
+<li> Review Your Answers Carefully Before Final Submission- You Can't Edit Afterward.</li>
+<li> Wait For The Submission Confirmation Message Before Closing The Window.</li>
+<li> Exam Results Will Be Shared Later Via The Official Portal Or Registered Email.</li>
+<li> Maintain Honesty And Discipline - Violations May Result In Disqualification.</li>
+</ol>
+
+<button onclick="startTest()">Start Test</button>
+
+</div>
+
+<!-- QUIZ -->
+<div id="quizSection" class="hidden">
+<h3 id="question"></h3>
+<div id="options"></div>
+<button onclick="nextQuestion()">Next</button>
+</div>
+
+<!-- RESULT -->
+<div id="resultSection" class="hidden">
+<h2 id="result"></h2>
+</div>
+
+</div>
+
+<script>
+
+/* REGEX */
+const nameRegex=/^[A-Za-z ]+$/;
+const emailRegex=/^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+const strongRegex=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
+/* VALIDATION WITH JQUERY */
+
+$("#name").on("input",function(){
+if(!nameRegex.test(this.value)){
+$(this).addClass("fail").removeClass("success");
+$("#nameError").slideDown();
+}else{
+$(this).addClass("success").removeClass("fail");
+$("#nameError").slideUp();
+}
+});
+
+$("#email").on("input",function(){
+if(!emailRegex.test(this.value)){
+$(this).addClass("fail").removeClass("success");
+$("#emailError").slideDown();
+}else{
+$(this).addClass("success").removeClass("fail");
+$("#emailError").slideUp();
+}
+});
+
+$("#password").on("input",function(){
+let val=this.value;
+
+if(val.length<6){
+$("#strength").text("Weak").css("color","red");
+}else if(strongRegex.test(val)){
+$("#strength").text("Strong").css("color","green");
+}else{
+$("#strength").text("Good").css("color","orange");
+}
+
+if(!strongRegex.test(val)){
+$(this).addClass("fail").removeClass("success");
+$("#passError").slideDown();
+}else{
+$(this).addClass("success").removeClass("fail");
+$("#passError").slideUp();
+}
+});
+
+$("#date").on("change",function(){
+if(this.value===""){
+$(this).addClass("fail");
+$("#dateError").slideDown();
+}else{
+$(this).addClass("success").removeClass("fail");
+$("#dateError").slideUp();
+}
+});
+
+$("#image").on("change",function(){
+let file=this.files[0];
+if(!file){
+$(this).addClass("fail");
+$("#imageError").slideDown();
+}else{
+$(this).addClass("success").removeClass("fail");
+$("#imageError").slideUp();
+$("#preview").attr("src",URL.createObjectURL(file));
+}
+});
+
+/* REGISTER */
+function register(){
+
+let gender=$("input[name='gender']:checked").val();
+
+if(
+nameRegex.test($("#name").val()) &&
+emailRegex.test($("#email").val()) &&
+strongRegex.test($("#password").val()) &&
+$("#date").val()!=="" &&
+gender &&
+$("#image")[0].files.length>0
+){
+$("#registerSection").hide();
+$("#rulesSection").show();
+$("#welcome").text("Welcome, "+$("#name").val());
+$("#ruleImage").attr("src",$("#preview").attr("src"));
+}else{
+$("#genderError").slideDown();
+}
+}
+
+/* QUESTIONS */
+const questions=[
+{q:"2+2=?",o:["3","4","5","6"],a:1},
+{q:"Capital of India?",o:["Delhi","Mumbai","Goa","Pune"],a:0},
+{q:"HTML is?",o:["Language","Car","Animal","None"],a:0},
+{q:"CSS used for?",o:["Style","Food","Game","None"],a:0},
+{q:"5*2=?",o:["5","10","15","20"],a:1},
+{q:"Sun rises from?",o:["East","West","North","South"],a:0},
+{q:"Which is DB?",o:["MySQL","HTML","CSS","JS"],a:0},
+{q:"10-5=?",o:["2","3","4","5"],a:3},
+{q:"JS stands for?",o:["JavaScript","JavaSource","JustStyle","None"],a:0},
+{q:"1+1=?",o:["1","2","3","4"],a:1}
+];
+
+let index=0;
+let score=0;
+let selected=null;
+
+function startTest(){
+$("#rulesSection").hide();
+$("#quizSection").show();
+showQuestion();
+}
+
+function showQuestion(){
+let q=questions[index];
+$("#question").text((index+1)+". "+q.q);
+$("#options").html("");
+selected=null;
+
+q.o.forEach((opt,i)=>{
+let btn=$("<button>"+opt+"</button>");
+btn.click(function(){ selected=i; });
+$("#options").append(btn);
+});
+}
+
+function nextQuestion(){
+if(selected===questions[index].a) score++;
+index++;
+
+if(index<questions.length){
+showQuestion();
+}else{
+$("#quizSection").hide();
+$("#resultSection").show();
+$("#result").text("Test Completed! Score: "+score+" / 10");
+}
+}
+
+</script>
+</body>
+</html>

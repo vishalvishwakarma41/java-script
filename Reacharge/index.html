@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recharge.. </title>
+    <link rel="stylesheet" href="/Reacharge/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+<div class="box main-box">
+    <h2>Recharge Form</h2>
+
+    <label>Customer Name</label>
+    <span id="estErr">*</span>
+    <input type="text" id="cname"onfocus="activeField='name'" onblur="clearNameError()"
+       oninput="allowOnlyLetters(this)">
+<span id="nameErr"></span><br>
+
+    <label>Mobile Number</label>
+    <span id="estErr">*</span>
+<input type="text" id="mobile" maxlength="10" onfocus="activeField='mobile'" onblur="clearMobileError()"
+       oninput="allowOnlyDigits(this)">
+<span id="mobErr"></span><br>
+
+    <label>Recharge Plan</label>
+   <select id="plan" onchange="checkTop()">
+    <option value="">Select Plan</option>
+    <option value="199">₹199 - 14 Days</option>
+    <option value="299">₹299 - 28 Days</option>
+    <option value="399">₹399 - 56 Days</option>
+    <option value="599">₹599 - 84 Days</option>
+</select>
+
+    <label>Total Amount With (18% GST)</label>
+    <input type="text" id="amount" readonly>
+
+    <button type="button" id="payMethodBtn" disabled onclick="openPaymentBox()">
+        Payment Method
+    </button>
+</div>
+
+<!-- DETAILS BOX  -->
+<div class="box" id="detailsBox">
+    <h3>Recharge Details</h3>
+
+    <p>Mobile No: <span id="dMobile"></span></p>
+    <p>SIM Name: Jio</p>
+    <p>Total Amount: ₹<span id="dAmount"></span></p>
+
+    <label>Payment Mode</label>
+    <select id="payMode" onchange="paymentMode()">
+        <option value="">Select Payment Mode</option>
+        <option value="UPI">UPI</option>
+        <option value="Cash">Cash</option>
+        <option value="Card">Credit / Debit Card</option>
+        <option value="NetBanking">Net Banking</option>
+    </select>
+
+    <!--  UPI BOX-->
+    <div id="upiBox" class="hidden">
+        <input type="text" id="upiId" placeholder="example@upi" oninput="validateUPI()">
+        <p>
+            e.g., <br>
+            suresh@okicici <br>
+            9876543210@upi <br>
+            myprofile@googlepay <br>
+        </p>
+        <span class="err" id="upiErr"></span>
+    </div>
+
+<div id="cardBox" class="hidden">
+    <input type="text" id="cardNo" maxlength="16" placeholder="Card Number" oninput="validateCardNo(this)">
+    <span id="cardNoErr" class="err"></span>
+
+    <input type="text" id="cvv" maxlength="3" placeholder="CVV" oninput="validateCVV(this)">
+    <span id="cvvErr" class="err"></span>
+
+    <input type="month" id="expMonth" onchange="validateExpiry()">
+    <span id="expErr" class="err"></span>
+</div>
+
+<div id="netBankBox" class="hidden">
+
+    <label>Select Bank</label>
+    <select id="bankSelect" onchange="bankChange()">
+        <option value="">Select Bank</option>
+        <option value="SBI">SBI</option>
+        <option value="HDFC">HDFC</option>
+        <option value="ICICI">ICICI</option>
+        <option value="PNB">PNB</option>
+    </select>
+
+    <div id="bankDetails" class="hidden">
+        <input type="text" id="accName" placeholder="Account Holder Name" oninput="validateAccName(this)">
+        <span  class="err" id="acNameErr" ></span>
+
+        <input type="text" id="accNo" maxlength="16" placeholder="Account Number" oninput="validateAccountNumber()">
+        <span class="err" id="accErr"></span>
+
+        <input type="text" id="ifsc" maxlength="11" placeholder="IFSC Code" oninput="validateIFSC()">
+        <span class="err" id="ifscErr"></span>
+    </div>
+</div>
+
+
+    <button id="payBtn" disabled onclick="showSummary()">
+        PAYMENT
+    </button>
+    <span id="payErr" class="err"></span>
+
+</div>
+
+<div class="box" id="summaryBox" style="display: none;">
+     <div id="receipt">
+    <h3>Summary</h3>
+
+    <p><b>Recharge Successful !!</b></p>
+
+    <p>Customer Name: <span id="sName"></span></p>
+    <p>Mobile No: <span id="sMobile"></span></p>
+    <p>Recharge Plan: <span id="sPlan"></span></p>
+    <p>Total Amount Pay: ₹<span id="sAmount"></span></p>
+
+    <p>Validity: <span id="sValidity"></span></p>
+    
+    <p>Benefits:</p>
+    <p id="sBenefits"></p>
+
+    <p>Recharge Date: <span id="sRechargeDate"></span></p>
+    <p>Recharge Time: <span id="sRechargeTime"></span></p>
+
+    <p>Expiry Date: <span id="sExpiryDate"></span></p>
+    <p>Expiry Time: <span id="sExpiryTime"></span></p>
+
+    <p>Payment Mode: <span id="sPay"></span></p>
+    <p><span id="sExtra"></span></p>
+
+   <button onclick="printReceipt()">🖨 Print Receipt</button>
+
+</div>
+</div>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/Reacharge/js/script.js"></script>
+
+</body>
+</html>

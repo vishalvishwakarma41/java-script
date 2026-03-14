@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Online Test</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../OnlineTest/css/style.css">
+</head>
+
+<body>
+
+    <div class="card shadow p-4">
+
+        <div id="registerSection">
+            <h3 class="text-center text-primary mb-3">Student Registration</h3>
+
+            <div class="square mb-3">
+                <img id="preview" style="display: none;">
+                <span id="squareText" class="preview-text"></span>
+            </div>
+
+            <div class="mb-3">
+                <input type="text" id="name" class="form-control" placeholder="Enter Name">
+                <span id="nameHint" class="hint-text"></span>
+                <span id="nameError" class="error"></span>
+            </div>
+
+            <div class="mb-3">
+                <input type="text" id="email" class="form-control" placeholder="Enter Email">
+                <span id="emailHint" class="hint-text"></span>
+                <span id="emailError" class="error"></span>
+            </div>
+
+            <div class="mb-3">
+                <div class="input-group">
+                    <input type="password" id="password" class="form-control" placeholder="Enter Password">
+                    <span class="input-group-text" id="togglePassword" style="cursor:pointer;">
+                        <i class="bi bi-eye"></i>
+                    </span>
+                </div>
+                <span id="passHint" class="hint-text"></span>
+                <span id="strength" class="fw-bold mt-1"></span>
+                <span id="passError" class="error"></span>
+            </div>
+
+            <div class="mb-3">
+                <input type="date" id="date" class="form-control">
+                <span id="dateHint" class="hint-text"></span>
+                <span id="dateError" class="error"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Select Gender</label>
+                <div>
+                    <span class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="male" value="Male">
+                        <label class="form-check-label" for="male">Male</label>
+                    </span>
+                    <span class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
+                        <label class="form-check-label" for="female">Female</label>
+                    </span>
+                </div>
+                <span id="genderHint" class="hint-text"></span>
+                <span id="genderError" class="error"></span>
+            </div>
+
+            <div class="mb-3">
+                <input type="file" id="image" class="form-control" accept="image/*">
+                <span id="imageHint" class="hint-text"></span>
+                <span id="imageError" class="error"></span>
+            </div>
+
+            <button class="btn btn-primary w-100" onclick="register()">Submit</button>
+        </div>
+
+        <div id="rulesSection" class="d-none">
+            <h3 class="text-center text-success mb-3">Rules & Regulation</h3>
+
+            <div class="circle mb-3">
+                <img id="ruleImage" style="display: none;">
+                <span id="circleText" class="preview-text"></span>
+            </div>
+
+            <h5 id="welcome" class="text-center mb-3"></h5>
+
+            <ul>
+                <li>
+                    Ensure You Have A Stable Internet Connection Before Starting The Exam.
+                </li>
+                <li>
+                    Use A Desktop Or Laptop- Mobile Phones And Tablets Are Not Allowed.
+                </li>
+                <li>
+                    Open The Exam Only In Google Chrome Or Mozilla Firefox (Latest Version).
+                </li>
+                <li>Keep Your Webcam And Microphone ON If Monitoring Is Required.</li>
+                <li>Do Not Refresh Or Close The Exam Window Once It Has Started.</li>
+                <li>
+                    The Exam Is Time-Bound, So Complete All Sections Within The Given Duration.
+                </li>
+                <li>Do Not Switch Tabs Or Open New Windows During The Exam.</li>
+                <li>
+                    8. Copying, Screen Sharing, Or Using Al/Code Generation Tools Is Strictly Prohibited.
+                </li>
+                <li>Do Not Discuss Or Share Answers With Others During The Exam.</li>
+            </ul>
+            </ul>
+
+            <button class="btn btn-success w-100" onclick="startTest()">Start Test</button>
+        </div>
+
+        <!-- <div id="quizSection" class="d-none">
+            <h5>Question <span id="qNo">1</span>/20</h5>
+            <h5 id="question" class="mb-3"></h5>
+            <div id="options"></div>
+            <button class="btn btn-warning w-100 mt-2" onclick="nextQuestion()" id="nextBtn">Next</button>
+        </div> -->
+
+        <div id="quizSection" class="d-none">
+
+            <div class="d-flex justify-content-between mb-2">
+                <h5>Question <span id="qNo">1</span>/20</h5>
+                <h5 class="text-danger">Time Left: <span id="timer">10:00</span></h5>
+            </div>
+
+            <h5 id="question" class="mb-3"></h5>
+            <div id="options"></div>
+
+            <button class="btn btn-warning w-100 mt-2" onclick="nextQuestion()" id="nextBtn">Next</button>
+
+        </div>
+
+        <div id="resultSection" class="d-none text-center">
+            <h3 class="text-info">Test Completed!</h3>
+            <h1 id="score" class="display-1">0/20</h1>
+            <h4 id="correctCount">Correct: 0</h4>
+            <!-- <button class="btn btn-primary mt-3" onclick="restart()">New Registration</button> -->
+        </div>
+
+    </div>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <Script src="js/script.js"></Script>
+
+
+</body>
+
+</html>

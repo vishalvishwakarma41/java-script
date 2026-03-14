@@ -1,0 +1,161 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Employee Salary Calculator</title>
+<link rel="stylesheet" href="../EMP_SalaryClc/css/style.css">
+</head>
+
+<body>
+
+<div id="main">
+
+<h2>Employee Salary Calculator</h2>
+
+<!-- Year + Month -->
+<div class="form-row">
+    <div class="form-group">
+        <label>Year</label>
+        <input type="number" id="year"
+               oninput="this.value=this.value.slice(0,4); checkYear();">
+        <span id="leapText"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Month</label>
+        <select id="month" onchange="setDays()" disabled>
+            <option value="">Select</option>
+            <option value="1">Jan</option>
+            <option value="2">Feb</option>
+            <option value="3">Mar</option>
+            <option value="4">Apr</option>
+            <option value="5">May</option>
+            <option value="6">Jun</option>
+            <option value="7">Jul</option>
+            <option value="8">Aug</option>
+            <option value="9">Sep</option>
+            <option value="10">Oct</option>
+            <option value="11">Nov</option>
+            <option value="12">Dec</option>
+        </select>
+    </div>
+</div>
+
+<!-- Attendance -->
+<div class="form-row">
+    <div class="form-group">
+        <label>Total Days</label>
+        <input type="text" id="totalDays" readonly>
+    </div>
+
+    <div class="form-group">
+        <label>Per Day Salary</label>
+        <input type="number" id="perDay" min="100" oninput="perDayChanged()">
+        <span id="perDayErr" class="err"></span>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group">
+        <label>Present Days</label>
+        <input type="number" id="present" oninput="presentChanged()">
+        <span id="presentErr" class="err"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Absent Days</label>
+        <input type="number" id="absent" readonly>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group">
+        <label>Basic Salary</label>
+        <input type="text" id="basic" readonly>
+    </div>
+
+    <div class="form-group">
+        <label>Allow CL</label>
+        <div class="radioGroup">
+            <label><input type="radio" name="cl" onclick="clYes()"> Yes</label>
+            <label><input type="radio" name="cl" onclick="clNo()"> No</label>
+        </div>
+    </div>
+</div>
+
+<!-- CL Section -->
+<div id="clBox">
+
+    <div class="form-row">
+        <div class="form-group">
+            <label>CL Days</label>
+            <input type="number" id="clDays" oninput="clDaysChanged()" disabled>
+        </div>
+
+        <div class="form-group">
+            <label>Total Present (With CL)</label>
+            <input type="text" id="totalPresentCL" readonly>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label>Total Absent (With CL)</label>
+            <input type="text" id="totalAbsentCL" readonly>
+        </div>
+    </div>
+
+</div>
+
+<!-- Allowances -->
+<h3>Allowances</h3>
+
+<div class="form-row">
+    <div class="form-group">
+        <label>HR %</label>
+        <input type="number" id="hr" oninput="recalculateSalarySlip()">
+    </div>
+    <div class="form-group">
+        <label>HR Amount</label>
+        <input type="number" id="hrAmt" readonly>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group">
+        <label>Travel %</label>
+        <input type="number" id="travel" oninput="recalculateSalarySlip()">
+    </div>
+    <div class="form-group">
+        <label>Travel Amount</label>
+        <input type="number" id="travelAmt" readonly>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group">
+        <label>Food %</label>
+        <input type="number" id="food" oninput="recalculateSalarySlip()">
+    </div>
+    <div class="form-group">
+        <label>Food Amount</label>
+        <input type="number" id="foodAmt" readonly>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group">
+        <label>Total Allowances</label>
+        <input type="text" id="totalAllowances" readonly>
+    </div>
+</div>
+
+<h3>Final Salary</h3>
+<input type="text" id="totalSalary" readonly>
+
+</div>
+
+<script src="../EMP_SalaryClc/js/script.js"></script>
+</body>
+</html>

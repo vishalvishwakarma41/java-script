@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Online Test Project</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #4e73df, #1cc88a);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            width: 600px;
+            border-radius: 15px;
+        }
+
+        .square {
+            width: 150px;
+            height: 150px;
+            border: 3px solid #4e73df;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .square img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid #1cc88a;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .success {
+            border: 2px solid green !important;
+        }
+
+        .fail {
+            border: 2px solid red !important;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+            display: none;
+        }
+
+        .option-btn {
+            margin-bottom: 8px;
+        }
+        #registerSection{
+            background: #c7cde3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card shadow p-4">
+
+        <!-- REGISTRATION -->
+        <div id="registerSection">
+
+            <h3 class="text-center text-primary mb-3">Student Registration</h3>
+
+            <div class="square mb-3">
+                <img id="preview">
+            </div>
+
+            <div class="mb-3">
+                <input type="text" id="name" class="form-control" placeholder="Enter Name">
+                <div id="nameError" class="error">Enter Valid Name</div>
+            </div>
+
+            <div class="mb-3">
+                <input type="text" id="email" class="form-control" placeholder="Enter Email">
+                <div id="emailError" class="error">Enter Valid Email</div>
+            </div>
+
+            <div class="mb-3">
+                <div class="input-group">
+                    <input type="password" id="password" class="form-control" placeholder="Enter Password">
+                    <span class="input-group-text" id="togglePassword" style="cursor:pointer;">
+                        <i class="bi bi-eye"></i>
+                    </span>
+                </div>
+                <div id="strength" class="fw-bold mt-1"></div>
+                <div id="passError" class="error"></div>
+            </div>
+
+            <div class="mb-3">
+                <input type="date" id="date" class="form-control">
+                <div id="dateError" class="error">Select Date of Birth</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Select Gender</label>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="male" value="Male">
+                    <label class="form-check-label" for="male">Male</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
+                    <label class="form-check-label" for="female">Female</label>
+                </div>
+
+                <div id="genderError" class="error mt-1"></div>
+            </div>
+
+            <div class="mb-3">
+                <input type="file" id="image" class="form-control" accept="image/*">
+                <div id="imageError" class="error">Select Image</div>
+            </div>
+
+            <button class="btn btn-primary w-100" onclick="register()">Submit</button>
+
+        </div>
+
+        <!-- RULES -->
+        <div id="rulesSection" class="d-none">
+
+            <h3 class="text-center text-success mb-3">Rules & Regulation</h3>
+
+            <div class="circle mb-3">
+                <img id="ruleImage">
+            </div>
+
+            <h5 id="welcome" class="text-center mb-3"></h5>
+
+            <ul class="small">
+                <li> Ensure You Have A Stable Internet Connection Before Starting The Exam.</li>
+                <li> Use A Desktop Or Laptop- Mobile Phones And Tablets Are Not Allowed.</li>
+                <li> Open The Exam Only In Google Chrome Or Mozilla Firefox (Latest Version).</li>
+                <li> Keep Your Webcam And Microphone ON If Monitoring Is Required.</li>
+                <li> Do Not Refresh Or Close The Exam Window Once It Has Started.</li>
+                <li> The Exam Is Time-Bound, So Complete All Sections Within The Given Duration.</li>
+                <li> Do Not Switch Tabs Or Open New Windows During The Exam.</li>
+                <li> Copying, Screen Sharing, Or Usin Al/Code Generation Tools Is Strictly Prohibited.</li>
+                <li> Do Not Discuss Or Share Answers With Others During The Exam.</li>
+                <li> Avoid Multiple Logins Or Using More Than One Device At A Time.</li>
+                <li> Review Your Answers Carefully Before Final Submission- You Can't Edit Afterward.</li>
+                <li> Wait For The Submission Confirmation Message Before Closing The Window.</li>
+                <li> Exam Results Will Be Shared Later Via The Official Portal Or Registered Email.</li>
+                <li> Maintain Honesty And Discipline - Violations May Result In Disqualification.</li>
+            </ul>
+
+            <button class="btn btn-success w-100" onclick="startTest()">Start Test</button>
+
+        </div>
+
+        <!-- QUIZ -->
+        <div id="quizSection" class="d-none">
+
+            <h5 id="question" class="mb-3"></h5>
+            <div id="options"></div>
+
+            <button class="btn btn-warning w-100 mt-2" onclick="nextQuestion()">Next</button>
+
+        </div>
+
+        <!-- RESULT -->
+        <div id="resultSection" class="d-none text-center">
+            <h3 id="result" class="text-info"></h3>
+        </div>
+
+    </div>
+
+    <script>
+
+        /* REGEX */
+        const nameRegex = /^[A-Za-z ]+$/;
+        const emailRegex = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+        const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
+        /* NAME */
+
+        // // Focus
+        // $("#name").on("focus", function () {
+        //     if ($(this).val().trim() === "") {
+        //         $("#nameError").text("Please fill name").slideDown();
+        //         $(this).addClass("fail");
+        //     }
+        // });
+
+        // // Input
+        // $("#name").on("input", function () {
+
+        //     this.value = this.value.replace(/[0-9]/g, '');
+
+        //     if (!nameRegex.test(this.value) || this.value.trim() === "") {
+        //         $(this).addClass("fail").removeClass("success");
+        //         $("#nameError").text("Only letters allowed").slideDown();
+        //     } else {
+        //         $(this).addClass("success").removeClass("fail");
+        //         $("#nameError").slideUp();
+        //     }
+        // });
+
+        // // Blur
+        // $("#name").on("blur", function () {
+        //     if ($(this).val().trim() === "") {
+        //         $("#nameError").text("Please fill name").slideDown();
+        //         $(this).addClass("fail").removeClass("success");
+        //     }
+        // });
+        // NAME FOCUS
+        $("#name").on("focus", function () {
+            if ($(this).val().trim() === "") {
+                $("#nameError").text("Please fill name").slideDown();
+                $(this).addClass("fail");
+            }
+        });
+
+        // NAME INPUT
+        $("#name").on("input", function () {
+
+            this.value = this.value.replace(/[0-9]/g, '');
+
+            if (!nameRegex.test(this.value) || this.value.trim() === "") {
+                $(this).addClass("fail").removeClass("success");
+                $("#nameError").text("Only letters allowed").slideDown();
+            } else {
+                $(this).addClass("success").removeClass("fail");
+                $("#nameError").slideUp();
+            }
+        });
+
+        // NAME BLUR (IMPORTANT)
+        $("#name").on("blur", function () {
+            if ($(this).val().trim() === "") {
+                $("#nameError").slideUp();   // error hide
+                $(this).removeClass("fail success");
+            }
+        });
+
+        /* EMAIL */
+
+        $("#email").on("focus", function () {
+            if ($(this).val().trim() === "") {
+                $("#emailError").text("Please fill email").slideDown();
+                $(this).addClass("fail");
+            }
+        });
+
+        $("#email").on("input", function () {
+            if (!emailRegex.test(this.value)) {
+                $(this).addClass("fail").removeClass("success");
+                $("#emailError").text("Invalid email").slideDown();
+            } else {
+                $(this).addClass("success").removeClass("fail");
+                $("#emailError").slideUp();
+            }
+        });
+        $("#email").on("blur", function () {
+            if ($(this).val().trim() === "") {
+                $("#emailError").slideUp();
+                $(this).removeClass("fail success");
+            }
+        });
+
+
+        /* PASSWORD */
+
+        $("#password").on("focus", function () {
+            if ($(this).val().trim() === "") {
+                $("#passError").text("Please fill password").slideDown();
+                $(this).addClass("fail");
+            }
+        });
+
+        $("#password").on("input", function () {
+
+            let val = this.value;
+
+            if (val.length < 6) {
+                $("#strength").text("Weak").css("color", "red");
+            } else if (strongRegex.test(val)) {
+                $("#strength").text("Strong").css("color", "green");
+            } else {
+                $("#strength").text("Good").css("color", "orange");
+            }
+
+            if (!strongRegex.test(val)) {
+                $(this).addClass("fail").removeClass("success");
+                $("#passError").text("Min 8 char, Upper, Lower, Number, Special").slideDown();
+            } else {
+                $(this).addClass("success").removeClass("fail");
+                $("#passError").slideUp();
+            }
+        });
+
+        $("#password").on("blur", function () {
+            if ($(this).val().trim() === "") {
+                $("#passError").slideUp();
+                $(this).removeClass("fail success");
+                $("#strength").text("");
+            }
+        });
+
+        /* DATE */
+
+        $("#date").on("focus", function () {
+            if ($(this).val() === "") {
+                $("#dateError").text("Please select DOB").slideDown();
+                $(this).addClass("fail");
+            }
+        });
+
+        $("#date").on("change", function () {
+            if ($(this).val() === "") {
+                $(this).addClass("fail");
+                $("#dateError").slideDown();
+            } else {
+                $(this).addClass("success").removeClass("fail");
+                $("#dateError").slideUp();
+            }
+        });
+        $("#date").on("blur", function () {
+            if ($(this).val() === "") {
+                $("#dateError").slideUp();
+                $(this).removeClass("fail success");
+            }
+        });
+
+        /* GENDER */
+
+        $("input[name='gender']").on("change", function () {
+            $("#genderError").slideUp();
+        });
+
+
+        /* IMAGE */
+
+        $("#image").on("focus", function () {
+            if ($("#image")[0].files.length === 0) {
+                $("#imageError").text("Please select image").slideDown();
+            }
+        });
+
+        $("#image").on("change", function () {
+            let file = this.files[0];
+
+            if (!file) {
+                $(this).addClass("fail");
+                $("#imageError").slideDown();
+            } else {
+                $(this).addClass("success").removeClass("fail");
+                $("#imageError").slideUp();
+                $("#preview").attr("src", URL.createObjectURL(file));
+            }
+        });
+
+        // $("input").on("focus", function(){
+        //     $(this).removeClass("fail");
+        //     $(this).closest(".mb-3").find(".error").slideUp();
+        // });
+
+        /* REGISTER */
+        function register() {
+
+            let gender = $("input[name='gender']:checked").val();
+
+            if (
+                nameRegex.test($("#name").val()) &&
+                emailRegex.test($("#email").val()) &&
+                strongRegex.test($("#password").val()) &&
+                $("#date").val() !== "" &&
+                gender &&
+                $("#image")[0].files.length > 0
+            ) {
+                $("#registerSection").addClass("d-none");
+                $("#rulesSection").removeClass("d-none");
+                $("#welcome").text("Welcome, " + $("#name").val());
+                $("#ruleImage").attr("src", $("#preview").attr("src"));
+            } else {
+                $("#genderError").slideDown();
+            }
+        }
+
+        /* QUESTIONS */
+        const questions = [
+            {
+                q: "Which number is a prime number?",
+                o: ["9", "15", "17", "21"],
+                a: 2
+            },
+            {
+                q: "What is the square root of 144?",
+                o: ["10", "11", "12", "13"], a: 2
+            },
+            {
+                q: "Which planet is known as Red Planet?",
+                o: ["Earth", "Mars", "Venus", "Jupiter"], a: 1
+            },
+            {
+                q: "Binary of decimal 5 is?",
+                o: ["101", "110", "111", "100"], a: 0
+            },
+            {
+                q: "Which is an even number?",
+                o: ["13", "17", "19", "24"], a: 3
+            },
+            {
+                q: "Which language runs in browser?",
+                o: ["Python", "Java", "JavaScript", "C"], a: 2
+            },
+            {
+                q: "What comes next in series: 2,4,8,16, ?",
+                o: ["18", "20", "24", "32"], a: 3
+            },
+            {
+                q: "Which is smallest number?",
+                o: ["0.5", "0.05", "0.005", "0.0005"],
+                a: 3
+            },
+            {
+                q: "Which device is input device?",
+
+                o: ["Monitor", "Printer", "Keyboard", "Speaker"],
+                a: 2
+            },
+            {
+                q: "HTML is used for?",
+                o: ["Styling", "Structure", "Database", "Server"],
+                a: 1
+            },
+            {
+                q: "Which is odd number?",
+                o: ["22", "34", "45", "60"],
+                a: 2
+            },
+            {
+                q: "Which gas do plants use?",
+                o: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Helium"],
+                a: 2
+            },
+            {
+                q: "1 byte = ?",
+                o: ["4 bits", "8 bits", "16 bits", "32 bits"],
+                a: 1
+            },
+            {
+                q: "Which is not a programming language?",
+                o: ["Java", "HTML", "Python", "C++"],
+                a: 1
+            },
+            {
+                q: "What is 2^3 ?",
+                o: ["6", "8", "9", "12"],
+                a: 1
+            },
+            {
+                q: "Which country has Taj Mahal?",
+                o: ["Nepal", "India", "China", "USA"],
+                a: 1
+            },
+            {
+                q: "Which number divisible by 5?",
+                o: ["42", "55", "63", "77"],
+                a: 1
+            },
+            // {
+            //     q: "Which symbol used for comment in JS?",
+            //     o: ["//", "#", "<!-- -->  ,"**"],
+            //     a: 0
+            // },
+            {
+                q: "Which is largest ocean?",
+                o: ["Indian", "Pacific", "Atlantic", "Arctic"],
+                a: 1
+            },
+            {
+                q: "Which is not a web browser?",
+                o: ["Chrome", "Firefox", "Edge", "Oracle"],
+                a: 3
+            }
+        ];
+
+        let index = 0;
+        let score = 0;
+        let selected = null;
+
+        function startTest() {
+            $("#rulesSection").addClass("d-none");
+            $("#quizSection").removeClass("d-none");
+            showQuestion();
+        }
+        function showQuestion() {
+            let q = questions[index];
+            $("#question").text((index + 1) + ". " + q.q);
+            $("#options").html("");
+            selected = null;
+
+            q.o.forEach((opt, i) => {
+                let btn = $(`<button class="btn btn-outline-primary w-100 option-btn">${opt}</button>`);
+
+                btn.click(function () {
+
+                    // remove highlight from all
+                    $(".option-btn").removeClass("btn-primary")
+                        .addClass("btn-outline-primary");
+
+                    // highlight selected
+                    $(this).removeClass("btn-outline-primary")
+                        .addClass("btn-primary");
+
+                    selected = i;
+                });
+
+                $("#options").append(btn);
+            });
+        }
+
+        function nextQuestion() {
+            if (selected === questions[index].a) score++;
+            index++;
+
+            if (index < questions.length) {
+                showQuestion();
+            } else {
+                $("#quizSection").addClass("d-none");
+                $("#resultSection").removeClass("d-none");
+                $("#result").text("Test Completed! Score: " + score + " / 10");
+            }
+        }
+
+        $("#togglePassword").click(function () {
+
+            let input = $("#password");
+            let icon = $(this).find("i");
+
+            if (input.attr("type") === "password") {
+                input.attr("type", "text");
+                icon.removeClass("bi-eye").addClass("bi-eye-slash");
+            } else {
+                input.attr("type", "password");
+                icon.removeClass("bi-eye-slash").addClass("bi-eye");
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,163 @@
+body {
+    font-family: Arial;
+    background: #f2f2f2;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background: #fff;
+    padding: 25px 30px;
+    width: 600px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+input:focus {
+    border: 2px solid #268fff;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+input {
+    padding: 10px;
+    width: 100%;
+    font-size: 15px;
+    box-sizing: border-box;
+    height: 42px;
+    border: 2px solid #ccc;
+    outline: none;
+}
+
+.error {
+    min-height: 18px;
+    /* line-height: 18px; */
+    display: block;
+    text-align: left;
+    font-size: 13px;
+    color: red;
+}
+
+button {
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+    background: #268fff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+button:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+
+#summary {
+    margin-top: 20px;
+    text-align: left;
+    font-size: 14px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 13px;
+}
+
+th, td {
+    border: 1px solid #000;
+    padding: 6px;
+    text-align: center;
+}
+
+th {
+    background: #eee;
+}
+
+/* .action-buttons {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.action-buttons button {
+    flex: 1;
+} */
+
+#printBtn, #nocBtn {
+    display: none;
+}
+
+input.error-border {
+    border: 2px solid red;
+}/* ===== DEFAULT HIDE NOC ===== */
+#nocArea {
+    display: none;
+}
+
+/* ===== PRINT MODE ===== */
+@media print {
+
+    body * {
+        visibility: hidden;
+    }
+
+    /* ===== SUMMARY + TABLE PRINT ===== */
+    body.print-summary #printArea,
+    body.print-summary #printArea * {
+        visibility: visible;
+    }
+
+    /* ===== NOC IMAGE PRINT ===== */
+    body.print-noc #nocArea,
+    body.print-noc #nocArea * {
+        visibility: visible;
+    }
+
+    #printArea,
+    #nocArea {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 6px;
+        text-align: center;
+    }
+}
+.action-buttons {
+    margin-top: 30px;
+
+    display: flex;
+    flex-direction: column;   /* vertical */
+    /* align-items: center;      center align */
+
+    gap: 12px;                /* space between buttons */
+}
+
+.action-buttons button {
+    width: 200px;
+    /* padding: 10px; */
+    cursor: pointer;
+}

@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Online Test Project</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #4e73df, #1cc88a);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .card {
+            width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .square {
+            width: 150px;
+            height: 150px;
+            border: 3px solid #4e73df;
+            margin: auto;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .square img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid #1cc88a;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .success {
+            border: 2px solid green !important;
+            background-color: #f0fff0;
+        }
+
+        .fail {
+            border: 2px solid red !important;
+            background-color: #fff0f0;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+            display: none;
+            margin-top: 5px;
+        }
+
+        .option-btn {
+            margin-bottom: 8px;
+            text-align: left;
+            padding: 10px 15px;
+        }
+
+        #registerSection {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #rulesSection {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #quizSection {
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #resultSection {
+            background: #d4edda;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .question-number {
+            background: #4e73df;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .progress {
+            height: 8px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .progress-bar {
+            background: #4e73df;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .fade {
+            animation: fade 0.5s ease;
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0.5;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .score-box {
+            font-size: 48px;
+            font-weight: bold;
+            color: #4e73df;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card shadow p-4">
+        <!-- REGISTRATION -->
+        <div id="registerSection">
+            <h3 class="text-center text-primary mb-3">Student Registration</h3>
+
+            <!-- <div class="square mb-3">
+                <img id="preview" src="https://via.placeholder.com/150x150?text=Preview">
+            </div> -->
+            <div class="square mb-3">
+                <img id="preview" style="display: none" />
+                <!-- Image छिपी है -->
+                <span id="squareText" class="preview-text"></span>
+                <!-- Text दिख रहा -->
+            </div>
+
+            <div class="mb-3">
+                <label>Full Name</label>
+                <input type="text" id="name" class="form-control" placeholder="Enter Name" />
+                <div id="nameError" class="error">
+                    Only letters allowed (min 3 characters)
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label>Email Address</label>
+                <input type="text" id="email" class="form-control" placeholder="Enter Email" />
+                <div id="emailError" class="error">
+                    Enter valid email (e.g., name@domain.com)
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label>Password</label>
+                <div class="input-group">
+                    <input type="password" id="password" class="form-control" placeholder="Enter Password" />
+                    <span class="input-group-text" id="togglePassword" style="cursor: pointer">
+                        <i class="bi bi-eye"></i>
+                    </span>
+                </div>
+                <div id="strength" class="fw-bold mt-1"></div>
+                <div id="passError" class="error">
+                    Min 8 chars with upper, lower, number & special
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label>Date of Birth</label>
+                <input type="date" id="date" class="form-control" />
+                <div id="dateError" class="error">Please select date</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Gender</label>
+                <div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="male" value="Male" />
+                        <label class="form-check-label" for="male">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="female" value="Female" />
+                        <label class="form-check-label" for="female">Female</label>
+                    </div>
+                </div>
+                <div id="genderError" class="error">Select gender</div>
+            </div>
+
+            <div class="mb-3">
+                <label>Profile Photo</label>
+                <input type="file" id="image" class="form-control" accept="image/*" />
+                <div id="imageError" class="error">Please select image</div>
+            </div>
+
+            <button class="btn btn-primary w-100" onclick="register()">
+                Register
+            </button>
+        </div>
+
+        <!-- RULES -->
+        <div id="rulesSection" class="d-none">
+            <h3 class="text-center text-success mb-3">Exam Rules</h3>
+
+            <!-- <div class="circle mb-3">
+                <img id="ruleImage" src="https://via.placeholder.com/150x150?text=Welcome">
+            </div> -->
+            <div class="circle mb-3">
+                <img id="ruleImage" style="display: none" />
+                <span id="circleText" class="preview-text">Welcome</span>
+            </div>
+
+            <h5 id="welcome" class="text-center mb-3"></h5>
+
+            <ul class="list-group mb-3">
+                <!-- <li class="list-group-item">✓ Stable internet required</li>
+                <li class="list-group-item">✓ Use desktop/laptop only</li>
+                <li class="list-group-item">✓ Don't refresh the page</li>
+                <li class="list-group-item">✓ Complete all 20 questions</li>
+                <li class="list-group-item">✓ No tab switching</li>
+                <li class="list-group-item">✓ Review before submission</li> -->
+                <li>
+                    Ensure You Have A Stable Internet Connection Before Starting The
+                    Exam.
+                </li>
+                <li>
+                    Use A Desktop Or Laptop- Mobile Phones And Tablets Are Not Allowed.
+                </li>
+                <li>
+                    Open The Exam Only In Google Chrome Or Mozilla Firefox (Latest
+                    Version).
+                </li>
+                <li>Keep Your Webcam And Microphone ON If Monitoring Is Required.</li>
+                <li>Do Not Refresh Or Close The Exam Window Once It Has Started.</li>
+                <li>
+                    The Exam Is Time-Bound, So Complete All Sections Within The Given
+                    Duration.
+                </li>
+                <li>Do Not Switch Tabs Or Open New Windows During The Exam.</li>
+                <li>
+                    8. Copying, Screen Sharing, Or Using Al/Code Generation Tools Is
+                    Strictly Prohibited.
+                </li>
+                <li>Do Not Discuss Or Share Answers With Others During The Exam.</li>
+            </ul>
+
+            <button class="btn btn-success w-100" onclick="startTest()">
+                Start Test
+            </button>
+        </div>
+
+        <!-- QUIZ -->
+        <div id="quizSection" class="d-none">
+            <!-- <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number" id="questionCount">Q1/20</span>
+                <span class="badge bg-info" id="progressText">5% Complete</span>
+            </div>
+
+            <div class="progress">
+                <div class="progress-bar" id="progressBar" style="width: 5%"></div>
+            </div> -->
+
+            <h5 id="question" class="mb-3 mt-3"></h5>
+            <div id="options"></div>
+
+            <button class="btn btn-warning w-100 mt-3" onclick="nextQuestion()" id="nextBtn">
+                Next Question
+            </button>
+        </div>
+
+        <!-- RESULT -->
+        <div id="resultSection" class="d-none text-center">
+            <h3 class="text-info mb-4">Exam Completed!</h3>
+
+            <div class="score-box" id="score">0/20</div>
+
+            <h5 id="resultMessage"></h5>
+
+            <div class="row mt-4">
+                <div class="col-6">
+                    <div class="border p-3 rounded bg-white">
+                        <h6>Correct</h6>
+                        <h3 id="correctCount">0</h3>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="border p-3 rounded bg-white">
+                        <h6>Wrong</h6>
+                        <h3 id="wrongCount">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary w-100 mt-4" onclick="restartExam()">
+                New Registration
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Simple regex patterns
+        const nameRegex = /^[A-Za-z ]{3,50}$/;
+        const emailRegex = /^[^@]+@[^@]+\.[a-z]{2,}$/;
+        const strongRegex =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
+        // ========== NAME VALIDATION ==========
+        $("#name").on("input", function () {
+            let val = $(this).val();
+
+            // Remove numbers
+            val = val.replace(/[0-9]/g, "");
+            $(this).val(val);
+
+            if (val.length < 3) {
+                $(this).addClass("fail").removeClass("success");
+                $("#nameError")
+                    .text(" Name must be at least 3 letters")
+                    .slideDown(200);
+            } else if (!nameRegex.test(val)) {
+                $(this).addClass("fail").removeClass("success");
+                $("#nameError").text(" Only letters allowed").slideDown(200);
+            } else {
+                $(this).addClass("success").removeClass("fail");
+                $("#nameError").slideUp(200);
+            }
+        });
+
+        // ========== EMAIL VALIDATION ==========
+        $("#email").on("input", function () {
+            if (!emailRegex.test($(this).val())) {
+                $(this).addClass("fail").removeClass("success");
+                $("#emailError").slideDown(200);
+            } else {
+                $(this).addClass("success").removeClass("fail");
+                $("#emailError").slideUp(200);
+            }
+        });
+
+        // ========== PASSWORD VALIDATION ==========
+        $("#password").on("input", function () {
+            let val = $(this).val();
+
+            // Show strength
+            if (val.length < 6) {
+                $("#strength").text("Weak").css("color", "red");
+            } else if (strongRegex.test(val)) {
+                $("#strength").text("Strong").css("color", "green");
+            } else {
+                $("#strength").text("Medium").css("color", "orange");
+            }
+
+            // Validate
+            if (!strongRegex.test(val) && val.length > 0) {
+                $(this).addClass("fail").removeClass("success");
+                $("#passError").slideDown(200);
+            } else if (val.length > 0) {
+                $(this).addClass("success").removeClass("fail");
+                $("#passError").slideUp(200);
+            } else {
+                $(this).removeClass("success fail");
+                $("#passError").slideUp(200);
+                $("#strength").text("");
+            }
+        });
+
+        // ========== DATE VALIDATION ==========
+        $("#date").on("change", function () {
+            if ($(this).val() === "") {
+                $(this).addClass("fail").removeClass("success");
+                $("#dateError").slideDown(200);
+            } else {
+                $(this).addClass("success").removeClass("fail");
+                $("#dateError").slideUp(200);
+            }
+        });
+
+        // ========== GENDER VALIDATION ==========
+        $("input[name='gender']").on("change", function () {
+            $("#genderError").slideUp(200);
+        });
+
+        // ========== IMAGE VALIDATION & PREVIEW ==========
+
+        // $("#image").on("change", function () {
+        //     let file = this.files[0];
+
+        //     if (!file) {
+        //         $(this).addClass("fail");
+        //         $("#imageError").slideDown(200);
+        //         return;
+        //     }
+
+        //     // Simple validation - only check if it's image
+        //     if (!file.type.startsWith('image/')) {
+        //         $("#imageError").text(" Please select image file").slideDown(200);
+        //         $(this).addClass("fail");
+        //         return;
+        //     }
+
+        //     // Success
+        //     $(this).addClass("success").removeClass("fail");
+        //     $("#imageError").slideUp(200);
+
+        //     // Preview
+        //     let reader = new FileReader();
+        //     reader.onload = function (e) {
+        //         $("#preview").attr("src", e.target.result);
+        //     };
+        //     reader.readAsDataURL(file);
+        // });
+
+        // ========== TOGGLE PASSWORD ==========
+        $("#image").on("change", function () {
+            let file = this.files[0];
+
+            // Agar koi file nahi chuni
+            if (!file) {
+                $(this).addClass("fail");
+                $("#imageError").show();
+                return;
+            }
+
+            // Check karo image file hai ki nahi
+            if (!file.type.startsWith("image/")) {
+                $("#imageError").text("Please select image file").show();
+                $(this).addClass("fail");
+                return;
+            }
+
+            // Sab sahi hai
+            $(this).addClass("success").removeClass("fail");
+            $("#imageError").hide();
+
+            // Image preview - SQUARE mein dikhao
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                // Square box mein image show karo
+                $("#preview").attr("src", e.target.result).show();
+                $("#squareText").hide(); // "No Image" text hide karo
+            };
+            reader.readAsDataURL(file);
+        });
+
+        $("#togglePassword").click(function () {
+            let input = $("#password");
+            if (input.attr("type") === "password") {
+                input.attr("type", "text");
+                $(this).find("i").removeClass("bi-eye").addClass("bi-eye-slash");
+            } else {
+                input.attr("type", "password");
+                $(this).find("i").removeClass("bi-eye-slash").addClass("bi-eye");
+            }
+        });
+
+        // ========== REGISTER FUNCTION ==========
+        function register() {
+            let gender = $("input[name='gender']:checked").val();
+            let isValid = true;
+
+            // Check all fields
+            if (!nameRegex.test($("#name").val())) {
+                $("#name").addClass("fail");
+                $("#nameError").slideDown(200);
+                isValid = false;
+            }
+
+            if (!emailRegex.test($("#email").val())) {
+                $("#email").addClass("fail");
+                $("#emailError").slideDown(200);
+                isValid = false;
+            }
+
+            if (!strongRegex.test($("#password").val())) {
+                $("#password").addClass("fail");
+                $("#passError").slideDown(200);
+                isValid = false;
+            }
+
+            if ($("#date").val() === "") {
+                $("#date").addClass("fail");
+                $("#dateError").slideDown(200);
+                isValid = false;
+            }
+
+            if (!gender) {
+                $("#genderError").slideDown(200);
+                isValid = false;
+            }
+
+            if ($("#image")[0].files.length === 0) {
+                $("#image").addClass("fail");
+                $("#imageError").slideDown(200);
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Simple fade animation
+                $("#registerSection").fadeOut(300, function () {
+                    $(this).addClass("d-none");
+                    $("#rulesSection").removeClass("d-none").hide().fadeIn(300);
+                    $("#welcome").text("Welcome, " + $("#name").val() + "!");
+
+                    // Set rule image
+                    // if ($("#preview").attr("src") !== "https://via.placeholder.com/150x150?text=Preview") {
+                    //     $("#ruleImage").attr("src", $("#preview").attr("src"));
+                    // }
+
+                    // Rules section में circle में image लगाओ
+                    let userImage = $("#preview").attr("src");
+                    if (userImage) {
+                        $("#ruleImage").attr("src", userImage).show(); // Image दिखाओ
+                        $("#circleText").hide(); // "Welcome" text छिपाओ
+                    }
+                });
+            }
+        }
+
+        // ========== 20 QUESTIONS ==========
+        const questions = [
+            // Easy questions
+            {
+                q: "Which number is a prime number?",
+                o: ["9", "15", "17", "21"],
+                a: 2,
+            },
+            {
+                q: "What is the square root of 144?",
+                o: ["10", "11", "12", "13"],
+                a: 2,
+            },
+            {
+                q: "Which planet is known as Red Planet?",
+                o: ["Earth", "Mars", "Venus", "Jupiter"],
+                a: 1,
+            },
+            { q: "Binary of decimal 5 is?", o: ["101", "110", "111", "100"], a: 0 },
+            { q: "Which is an even number?", o: ["13", "17", "19", "24"], a: 3 },
+            {
+                q: "Which language runs in browser?",
+                o: ["Python", "Java", "JavaScript", "C"],
+                a: 2,
+            },
+            {
+                q: "What comes next: 2,4,8,16, ?",
+                o: ["18", "20", "24", "32"],
+                a: 3,
+            },
+            {
+                q: "Which is smallest? 0.5, 0.05, 0.005, 0.0005",
+                o: ["0.5", "0.05", "0.005", "0.0005"],
+                a: 3,
+            },
+            {
+                q: "Which device is input device?",
+                o: ["Monitor", "Printer", "Keyboard", "Speaker"],
+                a: 2,
+            },
+            {
+                q: "HTML is used for?",
+                o: ["Styling", "Structure", "Database", "Server"],
+                a: 1,
+            },
+            { q: "Which is odd number?", o: ["22", "34", "45", "60"], a: 2 },
+            {
+                q: "Which gas do plants use?",
+                o: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Helium"],
+                a: 2,
+            },
+            {
+                q: "1 byte = ?",
+                o: ["4 bits", "8 bits", "16 bits", "32 bits"],
+                a: 1,
+            },
+            {
+                q: "Which is not a programming language?",
+                o: ["Java", "HTML", "Python", "C++"],
+                a: 1,
+            },
+            { q: "What is 2^3 ?", o: ["6", "8", "9", "12"], a: 1 },
+            {
+                q: "Which country has Taj Mahal?",
+                o: ["Nepal", "India", "China", "USA"],
+                a: 1,
+            },
+            {
+                q: "Which number divisible by 5?",
+                o: ["42", "55", "63", "77"],
+                a: 1,
+            },
+            {
+                q: "Which is largest ocean?",
+                o: ["Indian", "Pacific", "Atlantic", "Arctic"],
+                a: 1,
+            },
+            {
+                q: "Which is not a web browser?",
+                o: ["Chrome", "Firefox", "Edge", "Oracle"],
+                a: 3,
+            },
+            {
+                q: "What is capital of India?",
+                o: ["Mumbai", "Delhi", "Chennai", "Kolkata"],
+                a: 1,
+            },
+        ];
+
+        // Quiz variables
+        let index = 0;
+        let score = 0;
+        let selected = null;
+        let userAnswers = new Array(questions.length).fill(null);
+
+        // ========== START TEST ==========
+        function startTest() {
+            $("#rulesSection").fadeOut(300, function () {
+                $(this).addClass("d-none");
+                $("#quizSection").removeClass("d-none").hide().fadeIn(300);
+                showQuestion();
+            });
+        }
+
+        // ========== SHOW QUESTION ==========
+        function showQuestion() {
+            let q = questions[index];
+
+            // Update question
+            $("#question").text(index + 1 + ". " + q.q);
+            $("#questionCount").text("Q" + (index + 1) + "/20");
+
+            // Update progress
+            let progress = ((index + 1) / 20) * 100;
+            $("#progressBar").css("width", progress + "%");
+            $("#progressText").text(Math.round(progress) + "% Complete");
+
+            // Update button text
+            if (index === 19) {
+                $("#nextBtn").text("Submit Exam");
+            } else {
+                $("#nextBtn").text("Next Question");
+            }
+
+            // Generate options
+            $("#options").html("");
+            selected = userAnswers[index];
+
+            q.o.forEach((opt, i) => {
+                let btn = $(
+                    '<button class="btn btn-outline-primary w-100 option-btn">' +
+                    opt +
+                    "</button>"
+                );
+
+                // If previously selected
+                if (userAnswers[index] === i) {
+                    btn.removeClass("btn-outline-primary").addClass("btn-primary");
+                }
+
+                btn.click(function () {
+                    $(".option-btn")
+                        .removeClass("btn-primary")
+                        .addClass("btn-outline-primary");
+                    $(this).removeClass("btn-outline-primary").addClass("btn-primary");
+                    selected = i;
+                    userAnswers[index] = i;
+                });
+
+                $("#options").append(btn);
+            });
+        }
+
+        // ========== NEXT QUESTION ==========
+        function nextQuestion() {
+            // Save answer
+            if (selected !== null) {
+                if (selected === questions[index].a) {
+                    score++;
+                }
+            }
+
+            // Move to next or finish
+            if (index < 19) {
+                index++;
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        // ========== SHOW RESULT ==========
+        function showResult() {
+            // Calculate final score
+            score = 0;
+            for (let i = 0; i < questions.length; i++) {
+                if (userAnswers[i] === questions[i].a) {
+                    score++;
+                }
+            }
+
+            let wrong = 20 - score;
+            let message = "";
+
+            if (score >= 16) message = "Excellent!";
+            else if (score >= 12) message = "good Job!";
+            else if (score >= 8) message = "Fair Effort!";
+            else message = "Need Practice!";
+
+            // Show result
+            $("#quizSection").fadeOut(300, function () {
+                $(this).addClass("d-none");
+                $("#resultSection").removeClass("d-none").hide().fadeIn(300);
+
+                $("#score").text(score + "/20");
+                $("#resultMessage").text(message);
+                $("#correctCount").text(score);
+                $("#wrongCount").text(wrong);
+            });
+        }
+
+        // ========== RESTART EXAM ==========
+        function restartExam() {
+            // Reset variables
+            index = 0;
+            score = 0;
+            userAnswers = new Array(20).fill(null);
+
+            // Reset form
+            $("#name").val("").removeClass("success fail");
+            $("#email").val("").removeClass("success fail");
+            $("#password").val("").removeClass("success fail");
+            $("#date").val("").removeClass("success fail");
+            $("input[name='gender']").prop("checked", false);
+            $("#image").val("");
+            $("#preview").attr(
+                "src",
+                "https://via.placeholder.com/150x150?text=Preview"
+            );
+            $("#strength").text("");
+
+            // Hide all errors
+            $(".error").slideUp(200);
+
+            // Go back to registration
+            $("#resultSection").fadeOut(300, function () {
+                $(this).addClass("d-none");
+                $("#registerSection").removeClass("d-none").hide().fadeIn(300);
+            });
+        }
+    </script>
+</body>
+
+</html>

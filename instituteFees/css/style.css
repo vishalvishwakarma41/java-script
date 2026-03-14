@@ -1,0 +1,126 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;  
+    background: #e2dcca;
+    margin: 0;
+    padding: 20px;
+}
+
+
+/* Main Receipt Box */
+.container {
+    width: 720px;
+    margin: auto;
+    padding: 25px;
+    border: 2px solid #333;
+    background: #ebe2bc; 
+}
+
+/* Headings */
+h1 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: #5a1f1f;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+}
+
+h3 {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid #333;
+    padding: 10px;
+    font-size: 16px;   /* Increased */
+}
+
+
+/* Inputs */
+input, select {
+    width: 96%;
+    padding: 8px;
+    font-size: 16px;  
+    border: 1px solid #555;
+    background: #fffdf5;
+    box-sizing: border-box;
+    height: 36px;
+}
+
+
+input {
+    height: 32px;
+}
+
+/* Buttons */
+button {
+    padding: 10px 18px;
+    font-size: 15px;
+    background: #5a1f1f;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+
+button:hover {
+    background: #3e1515;
+}
+
+/* Error message */
+.err {
+    color: red;
+    font-size: 13px;
+    height: 16px;  
+    display: block;
+}
+
+/* Prevent layout shift */
+.error-wrapper {
+    height: 18px;
+}
+
+/* Input error border */
+.input-error {
+    border: 2px solid red !important;
+}
+
+/* Discount Box */
+#discountBox {
+    width: 50%;
+    border: 2px solid #444;
+    padding: 10px;
+    display: none;
+    margin-top: 15px;
+    background: #fff8dc;
+}
+
+@media print {
+
+    body {
+        background: white;
+    }
+
+    button,
+    select,
+    #discountBox {
+        display: none;
+    }
+
+    input {
+        border: none;
+        outline: none;
+        background: transparent;
+    }
+}

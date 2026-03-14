@@ -1,0 +1,209 @@
+/* body {
+    font-family: Arial;
+    background: #f2f2f2;
+}
+
+.box {
+    background: rgb(215, 214, 214);
+    width: 350px;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 6px;
+}
+
+input,
+select {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 6px;
+}
+
+button {
+    width: 100%;
+    padding: 8px;
+    background: rgb(102, 169, 102);
+    color: white;
+    border: none;
+}
+
+.err {
+    color: red;
+    font-size: 10px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+button:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+}
+#nameErr,#mobErr{
+    font-size: 12px;
+    color: rgb(255, 0, 0);
+
+} */
+
+body {
+    /* width: 100%;
+    height: 150vh; */
+    font-family: Arial;
+    background: #f2f2f2;
+}
+
+/* COMMON BOX */
+.box {
+    font-weight: 540;
+    background: rgb(215, 214, 214);
+    width: 350px;
+    padding: 15px;
+    border-radius: 6px;
+}
+
+/* FORM CENTER */
+.main-box {
+    margin: 20px auto;
+}
+
+/* INPUTS */
+input,
+select {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 6px;
+}
+input{
+    border-radius: 5px;
+    border: 1px solid rgb(126, 183, 197);
+
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    background: #2e7d32;      /* deep green */
+    color: #ffffff;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #1b5e20;
+}
+
+button:disabled {
+    background: #bdbdbd;
+    color: #666;
+    cursor: not-allowed;
+}
+
+
+/* ERROR */
+.err {
+    color: red;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* HIDE */
+.hidden {
+    display: none;
+}
+
+
+
+#detailsBox {
+    font-weight: 540;
+    position: absolute;
+    top: 75%;
+    left: 35%;          
+    width: 350px;
+    display: none;
+}
+
+#summaryBox {
+    position: absolute;
+    top: 3.5%;
+    right: 2%;     /* left side */
+    width: 375px;
+}
+
+
+#nameErr{
+    font-size: 14px;
+    color: #ff0000;
+
+} 
+/* #nameErr1{
+    font-size: 10px;
+    color: green;
+} */
+#estErr{
+    color: red;
+}
+.valid {
+    color: green;
+    font-size: 13px;
+}
+#mobErr {
+    font-size: 13px;
+}
+
+
+
+
+#receipt {
+    width: 335px;
+    margin: auto;
+    padding: 20px;
+    border: 1px dashed #333;
+    font-family: Arial;
+    background: #fff;
+}
+
+#receipt h2 {
+    text-align: center;
+}
+
+#receipt p {
+    margin: 6px 0;
+}
+
+#receipt button {
+    margin-top: 15px;
+    width: 100%;
+    padding: 8px;
+    cursor: pointer;
+}
+
+/* PRINT ONLY RECEIPT */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #receipt, #receipt * {
+        visibility: visible;
+    }
+
+    #receipt {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        border: none;
+    }
+
+    button {
+        display: none;
+    }
+}

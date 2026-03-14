@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Loan EMI Calculator</title>
+<link rel="stylesheet" href="../HomeLoanEMI/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    
+</head>
+
+<body>
+<div class="container">
+    <h2>Home Loan EMI Calculator</h2>
+
+
+     <input  type="text" id="loan" placeholder="Loan Amount (₹)" inputmode="numeric" >
+    <div class="error"></div>
+
+     <input type="text" id="rate" placeholder="Annual Interest Rate (%)" inputmode="decimal" maxlength="5">
+    <div class="error"></div>
+
+     <input 
+    type="text" id="year" placeholder="Tenure (In Years)"  inputmode="numeric" maxlength="2">
+    <div class="error"></div>
+
+    <button id="calcBtn" onclick="calculateEMI()" disabled>
+        Calculate EMI
+    </button>
+
+<div id="printArea">
+    <div id="summary"></div>
+    <table id="emiTable"></table>
+
+
+</div>
+
+</div>
+
+    <div class="action-buttons">
+        <button id="printBtn" style="display:none;">
+            Print Summary
+        </button>
+
+<div id="nocArea" style="display:none; text-align:center;">
+    <img 
+        src="https://www.tankhapay.com/blog/wp-content/uploads/2024/08/No-Objection-Certificate-NOC-for-Employee.webp"
+        alt="NOC Image"
+        style="max-width:100%; margin-top:50px;"
+    >
+</div>
+<button id="nocBtn" style="display:none;">NOC</button>
+
+
+    </div>
+</div>
+
+    <script src="../HomeLoanEMI/js/script.js"></script>
+
+</body>
+
+</html>
